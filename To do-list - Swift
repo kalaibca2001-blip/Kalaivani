@@ -1,0 +1,73 @@
+import Foundation
+
+var todoList: [String] = []
+
+func showMenu() {
+    print("\n------ TO DO LIST ------")
+    print("1. View Tasks")
+    print("2. Add Task")
+    print("3. Remove Task")
+    print("4. Exit")
+    print("Enter your choice:", terminator: " ")
+}
+
+func viewTasks() {
+    if todoList.isEmpty {
+        print("No tasks available.")
+    } else {
+        print("\nYour Tasks:")
+        for (index, task) in todoList.enumerated() {
+            print("\(index + 1). \(task)")
+        }
+    }
+}
+
+func addTask() {
+    print("Enter new task:", terminator: " ")
+    if let task = readLine(), !task.isEmpty {
+        todoList.append(task)
+        print("Task added successfully.")
+    } else {
+        print("Invalid task.")
+    }
+}
+
+func removeTask() {
+    viewTasks()
+    
+    if !todoList.isEmpty {
+        print("Enter task number to remove:", terminator: " ")
+        
+        if let input = readLine(),
+           let number = Int(input),
+           number > 0 && number <= todoList.count {
+            
+            todoList.remove(at: number - 1)
+            print("Task removed successfully.")
+        } else {
+            print("Invalid task number.")
+        }
+    }
+}
+
+var running = true
+
+while running {
+    showMenu()
+    
+    if let choice = readLine() {
+        switch choice {
+        case "1":
+            viewTasks()
+        case "2":
+            addTask()
+        case "3":
+            removeTask()
+        case "4":
+            running = false
+            print("Exiting program...")
+        default:
+            print("Invalid choice. Try again.")
+        }
+    }
+}
